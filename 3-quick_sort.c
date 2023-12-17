@@ -1,24 +1,19 @@
 #include "sort.h"
-
 /**
- * swap_arr - function swaps values.
- * @array: array of integers.
- * @size: the size of the array.
- * @a: first value address.
- * @b: second value address.
+ * swap - function swapping integers in array.
+ * @a: int.
+ * @b: int.
  *
  * Return: void.
  */
 
-void swap_arr(int *array, size_t size, int *a, int *b)
+void swap(int *a, int *b)
 {
-	if (*a != *b)
-	{
-		*a = *a + *b;
-		*b = *a - *b;
-		*a = *a - *b;
-		print_array((const int *)array, size);
-	}
+	int tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 
 /**
@@ -30,20 +25,29 @@ void swap_arr(int *array, size_t size, int *a, int *b)
  *
  * Return: size_t.
  */
-
-size_t partition_arr(int *array, size_t size, int low, int high)
+int partition_arr(int *array, size_t size, int low, int high)
 {
-	int x, pivot, y;
+	int x, *pivot, y;
 
-	pivot = array[high];
+	pivot = array + high;
 	for (x = y = low; y < high; y++)
 	{
-		if (array[y] < pivot)
+		if (array[y] < *pivot)
 		{
-			swap_arr(array, size, &array[y], &array[x++]);
+			if (x < y)
+			{
+				swap(array + y, array + x);
+				print_array(array, size);
+			}
+			x++;
 		}
 	}
-	swap_arr(array, size, &array[x], &array[high]);
+
+	if (array[x] > *pivot)
+	{
+		swap(array + x, pivot);
+		print_array(array, size);
+	}
 	return (x);
 }
 
@@ -57,12 +61,13 @@ size_t partition_arr(int *array, size_t size, int low, int high)
  * Return: size_t.
  */
 
-void sorting(int *array, size_t size, size_t low, size_t high)
+void sorting(int *array, size_t size, int low, int high)
 {
-	if (low < high)
-	{
-		size_t x = partition_arr(array, size, low, high);
+	int x;
 
+	if (high - low > 0)
+	{
+		x = partition_arr(array, size, low, high);
 		sorting(array, size, low, x - 1);
 		sorting(array, size, x + 1, high);
 	}
@@ -79,7 +84,7 @@ void sorting(int *array, size_t size, size_t low, size_t high)
 
 void quick_sort(int *array, size_t size)
 {
-	if (!array || !size)
+	if (!array || size < 2)
 		return;
 	sorting(array, size, 0, size - 1);
 }
