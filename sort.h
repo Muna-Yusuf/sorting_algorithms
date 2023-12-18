@@ -39,5 +39,7 @@ void quick_sort(int *array, size_t size);
 void swap(int *a, int *b);
 int partition_arr(int *array, size_t size, int low, int high);
 void sorting(int *array, size_t size, int low, int high);
+/*4. Shell sort - Knuth Sequence */
+void shell_sort(int *array, size_t size);
 
 #endif
