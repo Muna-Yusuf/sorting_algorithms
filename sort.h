@@ -42,4 +42,8 @@ void sorting(int *array, size_t size, int low, int high);
 /*4. Shell sort - Knuth Sequence */
 void shell_sort(int *array, size_t size);
 
+/*6. Counting sort*/
+int _max(int *array, int size);
+void counting_sort(int *array, size_t size);
+
 #endif
